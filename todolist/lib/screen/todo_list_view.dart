@@ -19,18 +19,33 @@ class _TodoListViewState extends State<TodoListView> {
           // todoList 에서 index 번째 데이터를 getter
           // todo 변수에 담기
           TodoDto todo = widget.todoList.data![index];
+
           return Dismissible(
             key: UniqueKey(),
             child: Center(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  width: 20,
+                  child: Column(
+                    children: [
+                      Text("${index + 1}"),
+                    ],
+                  ),
+                ),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red, width: 3),
+                    border: Border.all(
+                      color: Colors.black54,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                   ),
-                  width: 100,
+                  width: 80,
                   padding: const EdgeInsets.all(2),
+                  margin: const EdgeInsets.only(right: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -43,7 +58,7 @@ class _TodoListViewState extends State<TodoListView> {
                   // decoration: BoxDecoration(
                   // border: Border.all(color: Colors.red, width: 3),
                   // ),
-                  width: 300,
+                  width: 280,
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(

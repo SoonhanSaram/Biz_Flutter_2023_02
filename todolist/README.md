@@ -9,3 +9,9 @@
 flutter pub add sqflite
 flutter pub add path
 ```
+
+## flutter 에서 날짜 취급하기
+
+```bash
+flutter pub add intl
+```
