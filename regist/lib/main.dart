@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const Regist());
+  runApp(const Reservation());
 }
 
-class Regist extends StatelessWidget {
-  const Regist({super.key});
+class Reservation extends StatelessWidget {
+  const Reservation({super.key});
   final String imageLogo = 'assets/images/movv.png';
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class RegisterScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '가입하러 가기',
+                '예약하러 가기',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24.0,
@@ -90,7 +90,7 @@ class RegisterScreen extends StatelessWidget {
         _registerUser();
       },
       child: const Text(
-        '가입',
+        '예약',
         style: TextStyle(color: Colors.black, fontSize: 20),
       ),
     );
