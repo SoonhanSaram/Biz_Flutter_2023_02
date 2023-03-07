@@ -1,4 +1,4 @@
-package com.example.flutter_040_naver_api
+package com.kyoungmin.naver
 
 import io.flutter.embedding.android.FlutterActivity
 
