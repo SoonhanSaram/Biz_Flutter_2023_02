@@ -38,6 +38,8 @@ dependencies:
   change_app_package_name: ^1.1.0
   firebase_core: ^2.7.0
   firebase_database: ^10.0.14
+  google_sign_in: ^6.0.2
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

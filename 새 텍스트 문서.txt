@@ -1,0 +1,6 @@
+# flutter version 이 아니고 dart version
+# pre : 3.0.x 인 상태
+# stable : 2.19.3
+# flutter --version 으로 확인
+environment:
+  sdk: ">=2.19.3 <4.0.0"
