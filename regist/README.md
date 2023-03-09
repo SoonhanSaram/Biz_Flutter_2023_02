@@ -1,16 +1,15 @@
 # regist
 
-A new Flutter project.
+## 간단한 정보들만 취합한 예약 시스템
 
-## Getting Started
+- 구글 로그인을 통해서 예약 화면에 진입
+- 예약 화면에서 날짜를 선택하고 구글 맵에서 출발지와 도착지점를
+  선택하고 예약정보 확인란에서 인원 수와 출발시간 & 운송수단을 취합
+- 예약하기 버튼을 누르면 모든 과정에서 정보가 잘 취합되었는지
+  파악하기 위한 확인 팝업을 실행
 
-This project is a starting point for a Flutter application.
+## firebase 연동을 통한 예약 정보관리(예정)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 예약 정보를 firebase 로 보내 저장하고
+- main 페이지 단에서 client 예약정보를 확인&수정 할 수 있도록하기
+- 관리자 단에서는 모든 client 예약정보를 확인 할 수 있도록하기

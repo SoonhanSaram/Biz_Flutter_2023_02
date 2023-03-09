@@ -26,6 +26,7 @@ class _reselvationState extends State<reselvation> {
   final TextEditingController _destinationController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _numPeopleController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
   @override
   void dispose() {
     _departureController.dispose();
@@ -56,7 +57,16 @@ class _reselvationState extends State<reselvation> {
                   TextField(
                     controller: _dateController,
                     decoration: const InputDecoration(
-                      labelText: 'Date',
+                      labelText: '출발 날짜',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.phone,
+                    controller: _timeController,
+                    decoration: const InputDecoration(
+                      labelText: "출발 시간",
+                      suffixText: "시",
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -65,6 +75,7 @@ class _reselvationState extends State<reselvation> {
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
                       labelText: '인원수',
+                      suffixText: "명",
                       hintText: '1~10 또는 10인초과',
                       border: OutlineInputBorder(),
                     ),
@@ -101,6 +112,7 @@ class _reselvationState extends State<reselvation> {
                   icon: const Icon(Icons.car_rental),
                   onChanged: (String? value) {
                     setState(() {
+                      reselInfo.transfer = value.toString();
                       _dropValue = value;
                     });
                   },
@@ -111,8 +123,53 @@ class _reselvationState extends State<reselvation> {
                       child: Text(value),
                     );
                   }).toList(),
-                )
+                ),
               ],
+            ),
+            TextButton(
+              onPressed: () {
+                reselInfo.time = _timeController.text;
+                reselInfo.number = _numPeopleController.text;
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Resel Info"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("User: ${reselInfo.user}"),
+                          Text("Date: ${reselInfo.date}"),
+                          Text("Time: ${reselInfo.time}"),
+                          Text("From: ${reselInfo.from}"),
+                          Text("Destination: ${reselInfo.destination}"),
+                          Text("Transfer: ${reselInfo.transfer}"),
+                          Text("Number of People: ${reselInfo.number}"),
+                          Text("Payment: ${reselInfo.pay}"),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          child: const Text("OK"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text(
+                "예약하기",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  backgroundColor: Color(0xFF2186D1),
+                ),
+              ),
             ),
             Flexible(
               fit: FlexFit.tight,
