@@ -17,7 +17,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Member",
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: "Notosans"),
       home: const HomePage(),
     );
   }
@@ -97,18 +97,14 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(
                 fontSize: 36, fontWeight: FontWeight.w600, color: Colors.blue),
           ),
-          loginForm(),
           const SizedBox(
-            height: 20,
+            height: 250,
           ),
           loginButton(),
           const SizedBox(
             height: 20,
           ),
-          GestureDetector(
-            child: const Text("회원가입",
-                style: TextStyle(color: Colors.blue, fontSize: 16)),
-          ),
+
           /**
            * Flexible
            * 내부에 있는 widget 이 화면을 벗어나려고 할 때,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:regist/dto/reselvation_info.dart';
 import 'package:regist/maps.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -51,7 +52,7 @@ class _CalendarState extends State<Calendar> {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                reselInfo.date = selectedDay.toString();
+                reselInfo.date = DateFormat("yyyy-MM-dd").format(selectedDay);
                 print(reselInfo);
                 return Maps(reselInfo: reselInfo);
               },
