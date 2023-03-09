@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:regist/calendar.dart';
+import 'package:regist/dto/reselvation_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,15 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 
 class _HomePageState extends State<HomePage> {
   GoogleSignInAccount? _currentUser;
+  late ReselInfo reselInfo = ReselInfo(
+    user: '',
+    date: '',
+    from: '',
+    destination: '',
+    transfer: '',
+    number: '',
+    pay: '',
+  );
 
   @override
   void initState() {
@@ -51,8 +61,10 @@ class _HomePageState extends State<HomePage> {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       setState(() {
         _currentUser = account;
+        reselInfo.user = account!.displayName ?? "";
       });
     }); // end SignIn
+
     _googleSignIn.signInSilently();
   }
 
@@ -73,7 +85,9 @@ class _HomePageState extends State<HomePage> {
     final GoogleSignInAccount? user = _currentUser;
 
     if (user != null) {
-      return const RegisterScreen();
+      return RegisterScreen(
+        reselInfo: reselInfo,
+      );
     } else {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -227,8 +241,8 @@ Center iconButton() {
 }
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
-
+  const RegisterScreen({super.key, this.reselInfo});
+  final reselInfo;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -265,7 +279,7 @@ class RegisterScreen extends StatelessWidget {
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return const calendar();
+            return Calendar(reselInfo: reselInfo);
           },
         ));
       },
@@ -276,7 +290,5 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  void _registerUser() {
-    // 가입 버튼을 눌렀을 때 호출되는 메소드입니다.
-  }
+  void _registerUser() {}
 }

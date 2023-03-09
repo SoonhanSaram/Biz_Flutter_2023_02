@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:regist/dto/reselvation_info.dart';
 import 'package:regist/maps.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class calendar extends StatefulWidget {
-  const calendar({super.key});
+class Calendar extends StatefulWidget {
+  const Calendar({super.key, this.reselInfo});
+  final reselInfo;
 
   @override
-  State<calendar> createState() => _calendarState();
+  State<Calendar> createState() => _CalendarState();
 }
 
-class _calendarState extends State<calendar> {
+class _CalendarState extends State<Calendar> {
+  late ReselInfo reselInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    reselInfo = widget.reselInfo;
+  }
+
+  DateTime selectedDay = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
+  DateTime focusedDay = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +36,24 @@ class _calendarState extends State<calendar> {
           focusedDay: DateTime.now(),
           firstDay: DateTime.utc(2023, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),
-          onDaySelected: (selectedDay, focusedDay) {},
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              this.selectedDay = selectedDay;
+              this.focusedDay = focusedDay;
+            });
+          },
+          selectedDayPredicate: (DateTime day) {
+            // selectedDay 와 동일한 날짜의 모양을 바꿔줍니다.
+            return isSameDay(selectedDay, day);
+          },
         ),
         TextButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const Maps();
+                reselInfo.date = selectedDay.toString();
+                print(reselInfo);
+                return Maps(reselInfo: reselInfo);
               },
             ));
           },

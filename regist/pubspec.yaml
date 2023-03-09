@@ -43,6 +43,7 @@ dependencies:
   table_calendar: ^3.0.9
   google_maps_flutter: ^2.2.5
   kpostal: ^0.5.1
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:
