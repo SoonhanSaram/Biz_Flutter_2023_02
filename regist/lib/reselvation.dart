@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:regist/dto/reselvation_info.dart';
 
-class reselvation extends StatefulWidget {
-  const reselvation({super.key, this.reselInfo});
+class Reselvation extends StatefulWidget {
+  const Reselvation({super.key, this.reselInfo});
   final reselInfo;
   @override
-  State<reselvation> createState() => _reselvationState();
+  State<Reselvation> createState() => _ReselvationState();
 }
 
-class _reselvationState extends State<reselvation> {
+class _ReselvationState extends State<Reselvation> {
   late ReselInfo reselInfo;
   @override
   void initState() {

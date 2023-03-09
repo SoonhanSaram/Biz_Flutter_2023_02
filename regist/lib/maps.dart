@@ -162,7 +162,7 @@ class MapSampleState extends State<Maps> {
           builder: (context) {
             reselInfo.from = _startController.text;
             reselInfo.destination = _destinationController.text;
-            return reselvation(reselInfo: reselInfo);
+            return Reselvation(reselInfo: reselInfo);
           },
         ));
       },
