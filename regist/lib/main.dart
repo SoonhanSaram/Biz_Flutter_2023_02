@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:regist/calendar.dart';
 import 'package:regist/dto/reselvation_info.dart';
+import 'package:regist/membership_regist.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.delayed(const Duration(seconds: 3));
-
+  await Firebase.initializeApp();
   runApp(const App());
 }
 
@@ -39,6 +42,9 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class _HomePageState extends State<HomePage> {
+  final String _email = "";
+  final String _password = "";
+
   GoogleSignInAccount? _currentUser;
   late ReselInfo reselInfo = ReselInfo(
     user: '',
@@ -49,6 +55,29 @@ class _HomePageState extends State<HomePage> {
     number: '',
     pay: '',
   );
+
+  Future<void> _login() async {
+    try {
+      final crendetial = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _email,
+        password: _password,
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = "";
+      if (e.code == "user-not-found") {
+        message = "가입되지 않은 이메일 입니다";
+      } else if (e.code == "wrong-password") {
+        message = "잘못된 비밀번호 입니다";
+      } else {
+        message = "알 수 없는 에러";
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        message,
+        style: const TextStyle(color: Colors.white),
+      )));
+    }
+  }
 
   @override
   void initState() {
@@ -97,13 +126,31 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(
                 fontSize: 36, fontWeight: FontWeight.w600, color: Colors.blue),
           ),
-          const SizedBox(
-            height: 250,
+          const Flexible(
+            fit: FlexFit.tight,
+            child: SizedBox(
+              height: 150,
+            ),
           ),
+          inputField(stateValue: _email),
+          inputField(
+              labelText: "비밀번호를 입력해주세요",
+              obscureText: true,
+              stateValue: _password),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const EmailRegist()));
+              },
+              child: const Text("이메일로 회원가입")),
+          TextButton(
+              onPressed: () {
+                _login();
+              },
+              child: const Text("로그인")),
           loginButton(),
-          const SizedBox(
-            height: 20,
-          ),
 
           /**
            * Flexible
@@ -115,12 +162,31 @@ class _HomePageState extends State<HomePage> {
           const Flexible(
             fit: FlexFit.tight,
             child: SizedBox(
-              height: 100,
+              height: 200,
             ),
           )
         ],
       );
     }
+  }
+
+  Card inputField({
+    String labelText = "Email을 입력해주세요",
+    bool obscureText = false,
+    String stateValue = "",
+  }) {
+    return Card(
+      child: TextFormField(
+        onChanged: (value) {
+          stateValue = value;
+        },
+        obscureText: obscureText,
+        decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle:
+                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      ),
+    );
   }
 
   Form loginForm() {
