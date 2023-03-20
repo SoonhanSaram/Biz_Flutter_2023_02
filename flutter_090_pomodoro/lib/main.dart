@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_090_pomodoro/pages/dash_board_page.dart';
 import 'package:flutter_090_pomodoro/pages/main_page.dart';
 
 void main() {
@@ -23,9 +24,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const setCounter = 1500;
+  static const homeTitle = "home";
+  static const dashBoardTitle = "dashBoard";
+  int _pageIndex = 0;
   int _counter = setCounter;
   bool _timeRun = false;
-
+  final PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
 
   void _onPressed() {
@@ -67,28 +71,39 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           // Container에 image로 배경을 채우기 위해서 Scaffold의 배경색을 지우기
           backgroundColor: Colors.transparent,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [MainPage(counter: _counter)],
-            ),
+          body: PageView(
+            controller: _pageController,
+            // page가 전환됐을 때, bottmNav에 표시
+            onPageChanged: (pageNum) {
+              setState(() {
+                _pageIndex = pageNum;
+              });
+            },
+            children: [
+              MainPage(
+                  counter: _counter, onPressed: _onPressed, timeRun: _timeRun),
+              const DashBoardPage(),
+            ],
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: SizedBox(
-            width: 100,
-            height: 100,
-            child: FloatingActionButton(
-              backgroundColor: Colors.white38,
-              elevation: 5,
-              onPressed: _onPressed,
-              tooltip: 'Start',
-              child: Icon(
-                (_timeRun ? Icons.pause : Icons.play_arrow_rounded),
-                size: 80,
-                color: Colors.black,
-              ),
-            ),
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) {
+              setState(
+                () {
+                  _pageIndex = value;
+                  _pageController.animateToPage(
+                    value, // 페이지 번호
+                    duration: const Duration(milliseconds: 700), // 페이지 전환 시간
+                    curve: Curves.ease, // 애니메이션 종류
+                  );
+                },
+              );
+            },
+            currentIndex: _pageIndex,
+            items: const [
+              BottomNavigationBarItem(label: homeTitle, icon: Icon(Icons.home)),
+              BottomNavigationBarItem(
+                  label: dashBoardTitle, icon: Icon(Icons.dashboard)),
+            ],
           ),
         ),
       ),
